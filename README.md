@@ -8,7 +8,7 @@ ESM build of [workbox-window](https://www.npmjs.com/package/workbox-window).
 
 This module's documentation can be found at https://developers.google.com/web/tools/workbox/modules/workbox-window.
 
-`workbox-window-es` includes missing `updatefound` event in `Workbox` class.
+`workbox-window-es` includes missing `installing` and `updatefound` events in `Workbox` class.
 
 ## Usage
 
@@ -29,12 +29,12 @@ Import:
 
 ```js
 // ESM
-import { WorkBox } from 'workbox-window-es'
+import { Workbox } from 'workbox-window-es'
 ```
 
 ```js
 // CommonJS
-const { WorkBox } = require('workbox-window-es')
+const { Workbox } = require('workbox-window-es')
 ```
 
 ## License
