@@ -3,9 +3,16 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 const auto = process.env.SW_AUTO === 'true'
-const selfDestroying = process.env.SW_DESTROY === 'true'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    __SW__: auto ? '"/sw-auto.js"' : '"/sw-prompt.js"',
+    __SW_SCOPE__: '"/"',
+    __SW_TYPE__: '"classic"',
+    __DATE__: `${JSON.stringify(Date.now())}`,
+    AUTO_SW: `${JSON.stringify(process.env.SW_AUTO === 'true')}`,
+    AUTO_DESTROY_SW: 'false',
+  },
   plugins: [vue()],
 })

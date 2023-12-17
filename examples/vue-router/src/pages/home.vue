@@ -2,10 +2,11 @@
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const date = __DATE__
 </script>
 
 <template>
-  <div>Home route, built at: {{ __DATE__ }}</div>
+  <div>Home route, built at: {{ date }}</div>
   <br>
   <br>
   <button type="button" @click="router.push('/about')">
