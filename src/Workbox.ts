@@ -440,6 +440,8 @@ class Workbox extends WorkboxEventTarget {
       }
       if (sw)
         this.dispatchEvent(new WorkboxEvent('updatefound', { sw }))
+      else
+        this.dispatchEvent(new WorkboxEvent('installing', { sw: installingSW }))
     }
 
     // Increment the `updatefound` count, so future invocations of this
