@@ -2,10 +2,9 @@ import process from 'node:process'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-const auto = process.env.SW_AUTO === 'true'
-
 // https://vitejs.dev/config/
 export default defineConfig({
+  mode: process.env.MODE === 'production' ? 'production' : 'development',
   define: {
     __SW__: '"/sw.js"',
     __SW_SCOPE__: '"/"',

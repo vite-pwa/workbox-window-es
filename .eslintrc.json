@@ -6,6 +6,14 @@
       "rules": {
         "no-console": "off"
       }
+    },
+    {
+      "files": ["**/sw/**"],
+      "rules": {
+        "no-restricted-globals": "off",
+        "n/prefer-global/process": "off",
+        "no-undef": "off"
+      }
     }
   ]
 }
