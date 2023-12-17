@@ -60,6 +60,9 @@ importers:
       vue-tsc:
         specifier: ^1.8.25
         version: 1.8.25(typescript@5.3.3)
+      workbox-build:
+        specifier: ^7.0.0
+        version: 7.0.0
       workbox-cli:
         specifier: ^7.0.0
         version: 7.0.0

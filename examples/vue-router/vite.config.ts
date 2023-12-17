@@ -7,7 +7,7 @@ const auto = process.env.SW_AUTO === 'true'
 // https://vitejs.dev/config/
 export default defineConfig({
   define: {
-    __SW__: auto ? '"/sw-auto.js"' : '"/sw-prompt.js"',
+    __SW__: '"/sw.js"',
     __SW_SCOPE__: '"/"',
     __SW_TYPE__: '"classic"',
     __DATE__: `${JSON.stringify(Date.now())}`,

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build:auto": "SW_AUTO=true vite build && workbox injectManifest ./sw/auto.cjs",
+    "build:prompt": "SW_AUTO=false vite build && workbox injectManifest ./sw/prompt.cjs",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -16,6 +17,7 @@
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
     "vue-tsc": "^1.8.25",
+    "workbox-build": "^7.0.0",
     "workbox-cli": "^7.0.0",
     "workbox-window-es": "workspace:*"
   }
