@@ -32,10 +32,6 @@ const REGISTRATION_TIMEOUT_DURATION = 60000
 // to trigger a call to skipWaiting().
 const SKIP_WAITING_MESSAGE = { type: 'SKIP_WAITING' }
 
-// eslint-disable-next-line n/prefer-global/process
-const env = process['env']['NODE_ENV'] || 'production'
-const develoment = env !== 'production'
-
 /**
  * A class to aid in handling service worker registration, updates, and
  * reacting to service worker lifecycle events.
@@ -105,7 +101,7 @@ class Workbox extends WorkboxEventTarget {
   async register({ immediate = false } = {}): Promise<
         ServiceWorkerRegistration | undefined
     > {
-    if (develoment) {
+    if (process.env.NODE_ENV !== 'production') {
       if (this._registrationTime) {
         logger.error(
           'Cannot re-register a Workbox instance after it has '
@@ -167,7 +163,7 @@ class Workbox extends WorkboxEventTarget {
               wasWaitingBeforeRegister: true,
             }),
           )
-          if (develoment) {
+          if (process.env.NODE_ENV !== 'production') {
             logger.warn(
               'A service worker was already waiting to activate '
                             + 'before this script was registered...',
@@ -183,7 +179,7 @@ class Workbox extends WorkboxEventTarget {
       this._ownSWs.add(this._sw)
     }
 
-    if (develoment) {
+    if (process.env.NODE_ENV !== 'production') {
       logger.log(
         'Successfully registered service worker.',
         this._scriptURL.toString(),
@@ -235,7 +231,7 @@ class Workbox extends WorkboxEventTarget {
    */
   async update(): Promise<void> {
     if (!this._registration) {
-      if (develoment) {
+      if (process.env.NODE_ENV !== 'production') {
         logger.error(
           'Cannot update a Workbox instance without '
                     + 'being registered. Register the Workbox instance first.',
@@ -374,7 +370,7 @@ class Workbox extends WorkboxEventTarget {
       return reg
     }
     catch (error) {
-      if (develoment)
+      if (process.env.NODE_ENV !== 'production')
         logger.error(error)
 
       // Re-throw the error.
@@ -432,7 +428,7 @@ class Workbox extends WorkboxEventTarget {
 
       // The `installing` state isn't something we have a dedicated
       // callback for, but we do log messages for it in development.
-      if (develoment) {
+      if (process.env.NODE_ENV !== 'production') {
         if (sw)
           logger.log('Updated service worker found. Installing now...')
         else
@@ -496,7 +492,7 @@ class Workbox extends WorkboxEventTarget {
         if (state === 'installed' && registration.waiting === sw) {
           this.dispatchEvent(new WorkboxEvent('waiting', eventProps))
 
-          if (develoment) {
+          if (process.env.NODE_ENV !== 'production') {
             if (isExternal) {
               logger.warn(
                 'An external service worker has installed but is '
@@ -519,7 +515,7 @@ class Workbox extends WorkboxEventTarget {
         this._activeDeferred.resolve(sw)
     }
 
-    if (develoment) {
+    if (process.env.NODE_ENV !== 'production') {
       switch (state) {
         case 'installed':
           if (isExternal) {
@@ -580,7 +576,7 @@ class Workbox extends WorkboxEventTarget {
     )
 
     if (!isExternal) {
-      if (develoment)
+      if (process.env.NODE_ENV !== 'production')
         logger.log('Registered service worker now controlling this page.')
 
       this._controllingDeferred.resolve(sw)
