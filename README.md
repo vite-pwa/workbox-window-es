@@ -30,6 +30,9 @@ Import:
 ```js
 // ESM
 import { WorkBox } from 'workbox-window-es'
+```
+
+```
 // CommonJS
 const { WorkBox } = require('workbox-window-es')
 ```

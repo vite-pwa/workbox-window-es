@@ -40,12 +40,13 @@ const develoment = env !== 'production'
  * A class to aid in handling service worker registration, updates, and
  * reacting to service worker lifecycle events.
  *
- * @fires {@link workbox-window.Workbox#message}
- * @fires {@link workbox-window.Workbox#installed}
- * @fires {@link workbox-window.Workbox#waiting}
- * @fires {@link workbox-window.Workbox#controlling}
- * @fires {@link workbox-window.Workbox#activated}
- * @fires {@link workbox-window.Workbox#redundant}
+ * @fires WorkboxEventMap#message
+ * @fires WorkboxLifecycleEventMap#installed
+ * @fires WorkboxLifecycleEventMap#waiting
+ * @fires WorkboxLifecycleEventMap#controlling
+ * @fires WorkboxLifecycleEventMap#activated
+ * @fires WorkboxLifecycleEventMap#redundant
+ * @fires WorkboxLifecycleEventMap#updatefound
  */
 class Workbox extends WorkboxEventTarget {
   private readonly _scriptURL: string | TrustedScriptURL

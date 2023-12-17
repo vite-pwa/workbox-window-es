@@ -2,12 +2,12 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
     "noEmit": true,
     "strict": true,
-    "moduleResolution": "bundler",
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "resolveJsonModule": true
+    "noUnusedParameters": true
   },
   "exclude": [
     "dist",
