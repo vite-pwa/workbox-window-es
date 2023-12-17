@@ -5,8 +5,14 @@
   "scripts": {
     "dev": "vite dev",
     "build:auto": "SW_AUTO=true vite build && workbox injectManifest ./sw/auto.cjs",
+    "build:auto:prod": "SW_AUTO=true vite build && NODE_ENV=production workbox injectManifest ./sw/auto.cjs",
     "build:prompt": "SW_AUTO=false vite build && workbox injectManifest ./sw/prompt.cjs",
-    "preview": "vite preview"
+    "build:prompt:prod": "SW_AUTO=false vite build && NODE_ENV=production workbox injectManifest ./sw/prompt.cjs",
+    "preview": "vite preview",
+    "run:build:auto:dev": "nr build:auto && nr preview",
+    "run:build:auto:prod": "nr build:auto:prod && nr preview",
+    "run:build:prompt:dev": "nr build:prompt && nr preview",
+    "run:build:prompt:prod": "nr build:prompt:prod && nr preview"
   },
   "dependencies": {
     "vue": "^3.3.12",
