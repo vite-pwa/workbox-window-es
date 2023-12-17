@@ -32,7 +32,7 @@ Import:
 import { WorkBox } from 'workbox-window-es'
 ```
 
-```
+```js
 // CommonJS
 const { WorkBox } = require('workbox-window-es')
 ```
