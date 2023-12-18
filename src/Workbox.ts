@@ -424,20 +424,15 @@ class Workbox extends WorkboxEventTarget {
       this._ownSWs.add(installingSW)
       this._swDeferred.resolve(installingSW)
 
-      const sw = navigator.serviceWorker.controller
-
       // The `installing` state isn't something we have a dedicated
       // callback for, but we do log messages for it in development.
       if (process.env.NODE_ENV !== 'production') {
-        if (sw)
+        if (navigator.serviceWorker.controller)
           logger.log('Updated service worker found. Installing now...')
         else
           logger.log('Service worker is installing...')
       }
-      if (sw)
-        this.dispatchEvent(new WorkboxEvent('updatefound', { sw }))
-      else
-        this.dispatchEvent(new WorkboxEvent('installing', { sw: installingSW }))
+      this.dispatchEvent(new WorkboxEvent(navigator.serviceWorker.controller ? 'updatefound' : 'installing', { sw: installingSW }))
     }
 
     // Increment the `updatefound` count, so future invocations of this
@@ -486,7 +481,7 @@ class Workbox extends WorkboxEventTarget {
       // is very short.)
       // NOTE: we don't need separate timeouts for the own and external SWs
       // since they can't go through these phases at the same time.
-      // eslint-disable-next-line no-restricted-globals
+
       this._waitingTimeout = self.setTimeout(() => {
         // Ensure the SW is still waiting (it may now be redundant).
         if (state === 'installed' && registration.waiting === sw) {
