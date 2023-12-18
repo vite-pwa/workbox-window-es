@@ -21,6 +21,7 @@
     "message",
     "postMessage"
   ],
+  "sideEffects": false,
   "exports": {
     ".": {
       "import": "./dist/index.js",

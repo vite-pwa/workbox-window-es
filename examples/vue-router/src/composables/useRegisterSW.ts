@@ -15,6 +15,9 @@ export function useRegisterSW(options: RegisterSWOptions = {}) {
     onUpdateFound,
   } = options
 
+  // for first sw installation: will be set to false once the sw activates for the first time
+  const installing = ref(false)
+  const updateFound = ref(false)
   const needRefresh = ref(false)
   const offlineReady = ref(false)
 
@@ -35,13 +38,21 @@ export function useRegisterSW(options: RegisterSWOptions = {}) {
       onRegistered,
       onRegisteredSW,
       onRegisterError,
-      onInstalling,
-      onUpdateFound,
+      onInstalling(sw) {
+        installing.value = !!sw
+        onInstalling?.(sw)
+      },
+      onUpdateFound(sw) {
+        updateFound.value = true
+        onUpdateFound?.(sw)
+      },
     })
 
   return {
     updateServiceWorker,
     offlineReady,
     needRefresh,
+    installing,
+    updateFound,
   }
 }

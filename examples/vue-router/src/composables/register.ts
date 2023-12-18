@@ -17,7 +17,14 @@ export interface RegisterSWOptions {
    */
   onRegisteredSW?: (swScriptUrl: string, registration: ServiceWorkerRegistration | undefined) => void
   onRegisterError?: (error: any) => void
-  onInstalling?: (sw: ServiceWorker) => void
+  /**
+   * Called when the service worker is installing for first time.
+   *
+   * This callback will also be called when the service worker is activated (no service worker param provided).
+   *
+   * @param sw The service worker instance.
+   */
+  onInstalling?: (sw?: ServiceWorker) => void
   onUpdateFound?: (sw: ServiceWorker) => void
 }
 
@@ -67,8 +74,10 @@ export function registerSW(options: RegisterSWOptions) {
               window.location.reload()
           })
           wb.addEventListener('installed', (event) => {
-            if (!event.isUpdate)
+            if (!event.isUpdate) {
+              onInstalling?.()
               onOfflineReady?.()
+            }
           })
         }
         else {
@@ -96,19 +105,26 @@ export function registerSW(options: RegisterSWOptions) {
           wb.addEventListener('installed', (event) => {
             if (typeof event.isUpdate === 'undefined') {
               if (typeof event.isExternal !== 'undefined') {
-                if (event.isExternal)
+                if (event.isExternal) {
                   showSkipWaitingPrompt()
-                else
-                  !onNeedRefreshCalled && onOfflineReady?.()
+                }
+                else if (!onNeedRefreshCalled) {
+                  onInstalling?.()
+                  onOfflineReady?.()
+                }
               }
               else {
-                if (event.isExternal)
+                if (event.isExternal) {
                   window.location.reload()
-                else
-                  !onNeedRefreshCalled && onOfflineReady?.()
+                }
+                else if (!onNeedRefreshCalled) {
+                  onInstalling?.()
+                  onOfflineReady?.()
+                }
               }
             }
             else if (!event.isUpdate) {
+              onInstalling?.()
               onOfflineReady?.()
             }
           })
