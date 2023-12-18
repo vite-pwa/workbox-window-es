@@ -16,8 +16,8 @@ const {
   onOfflineReady() {
     console.log('offline ready')
   },
-  onInstalling() {
-    console.log('installing')
+  onInstalling(sw) {
+    console.log('installing: ', !!sw)
   },
   onUpdateFound() {
     console.log('update found')
