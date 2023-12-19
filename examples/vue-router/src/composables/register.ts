@@ -25,6 +25,7 @@ export interface RegisterSWOptions {
    * @param sw The service worker instance.
    */
   onInstalling?: (sw?: ServiceWorker) => void
+  // TODO: change also this like onInstalling
   onUpdateFound?: (sw: ServiceWorker) => void
 }
 
