@@ -381,7 +381,7 @@ class Workbox extends WorkboxEventTarget {
   /**
    * @private
    */
-  private readonly _onUpdateFound = () => {
+  private readonly _onUpdateFound = (originalEvent: Event) => {
     // `this._registration` will never be `undefined` after an update is found.
     const registration = this._registration!
     const installingSW = registration.installing as ServiceWorker
@@ -432,8 +432,16 @@ class Workbox extends WorkboxEventTarget {
         else
           logger.log('Service worker is installing...')
       }
-      this.dispatchEvent(new WorkboxEvent(navigator.serviceWorker.controller ? 'updatefound' : 'installing', { sw: installingSW }))
     }
+
+    this.dispatchEvent(
+      new WorkboxEvent('installing', {
+        sw: installingSW,
+        originalEvent,
+        isExternal: updateLikelyTriggeredExternally,
+        isUpdate: this._isUpdate,
+      }),
+    )
 
     // Increment the `updatefound` count, so future invocations of this
     // method can be sure they were triggered externally.
