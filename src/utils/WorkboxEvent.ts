@@ -45,6 +45,19 @@ export interface WorkboxLifecycleWaitingEvent extends WorkboxLifecycleEvent {
 }
 
 export interface WorkboxLifecycleEventMap {
+
+  /**
+   * The `installing` event is dispatched if the service-worker
+   * find the new version and start installing.
+   *
+   * @event workbox-window.Workbox#installing
+   * @type {WorkboxEvent}
+   * @property {ServiceWorker} sw The installing service worker instance.
+   * @property {Event} originalEvent The original [`statechange`]{@link https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker/onstatechange}
+   *     event.
+   * @property {string} type `installing`.
+   * @property {Workbox} target The `Workbox` instance.
+   */
   installing: WorkboxLifecycleEvent
   /**
    * The `installed` event is dispatched if the state of a
@@ -156,7 +169,6 @@ export interface WorkboxLifecycleEventMap {
    * @property {Workbox} target The `Workbox` instance.
    */
   redundant: WorkboxLifecycleEvent
-  updatefound: WorkboxLifecycleEvent
 }
 
 export interface WorkboxEventMap extends WorkboxLifecycleEventMap {

@@ -37,12 +37,12 @@ const SKIP_WAITING_MESSAGE = { type: 'SKIP_WAITING' }
  * reacting to service worker lifecycle events.
  *
  * @fires WorkboxEventMap#message
+ * @fires WorkboxLifecycleEventMap#installing
  * @fires WorkboxLifecycleEventMap#installed
  * @fires WorkboxLifecycleEventMap#waiting
  * @fires WorkboxLifecycleEventMap#controlling
  * @fires WorkboxLifecycleEventMap#activated
  * @fires WorkboxLifecycleEventMap#redundant
- * @fires WorkboxLifecycleEventMap#updatefound
  */
 class Workbox extends WorkboxEventTarget {
   private readonly _scriptURL: string | TrustedScriptURL
