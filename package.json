@@ -1,7 +1,7 @@
 {
   "name": "@vite-pwa/workbox-window",
   "type": "module",
-  "version": "7.0.0",
+  "version": "8.0.0",
   "packageManager": "pnpm@8.13.1",
   "description": "Simplifies communications with Workbox packages running in the service worker",
   "author": "Google's Web DevRel Team, Vite PWA's Team",
@@ -42,8 +42,7 @@
     "prepublishOnly": "npm run build",
     "release": "bumpp && npm publish --access=public"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@antfu/eslint-config": "^0.43.1",
     "@antfu/ni": "^0.21.12",
