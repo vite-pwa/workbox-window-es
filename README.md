@@ -41,9 +41,9 @@ ESM build of <a href='https://www.npmjs.com/package/workbox-window' target="__bl
 - 🛠️ **Versatile**: integration with meta-frameworks: [îles](https://github.com/ElMassimo/iles), [SvelteKit](https://github.com/sveltejs/kit), [VitePress](https://github.com/vuejs/vitepress), [Astro](https://github.com/withastro/astro), and [Nuxt 3](https://github.com/nuxt/nuxt)
 - 💥 **PWA Assets Generator**: generate all the PWA assets from a single command and a single source image
 
-## Original works
+## 🛠️ @vite-pwa/workbox-window
 
-ESM-first build of [workbox-window](https://www.npmjs.com/package/workbox-window).
+ESM build of [workbox-window](https://www.npmjs.com/package/workbox-window).
 
 This module's documentation can be found at https://developers.google.com/web/tools/workbox/modules/workbox-window.
 
@@ -74,7 +74,7 @@ import { Workbox } from '@vite-pwa/workbox-window'
 const { Workbox } = require('@vite-pwa/workbox-window')
 ```
 
-## License
+## 📄 License
 
 [MIT](./LICENSE)
 
