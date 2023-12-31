@@ -1,6 +1,6 @@
-<p align='center'>
-ESM build of [workbox-window](https://www.npmjs.com/package/workbox-window).
-</p>
+<h1 align='center'>
+ESM build of <a href='https://www.npmjs.com/package/workbox-window' target="__blank">workbox-window</a>
+</h1>
 <p align='center'>
 <a href='https://www.npmjs.com/package/@vite-pwa/workbox-window' target="__blank">
 <img src='https://img.shields.io/npm/v/@vite-pwa/workbox-window?color=33A6B8&label=' alt="NPM version">
@@ -12,8 +12,8 @@ ESM build of [workbox-window](https://www.npmjs.com/package/workbox-window).
     <img src="https://img.shields.io/static/v1?label=&message=docs%20%26%20guides&color=2e859c" alt="Docs & Guides">
 </a>
 <br>
-<a href="https://github.com/vite-pwa/workbox-window" target="__blank">
-<img alt="GitHub stars" src="https://img.shields.io/github/stars/vite-pwa/workbox-window?style=social">
+<a href="https://github.com/vite-pwa/workbox-window-es" target="__blank">
+<img alt="GitHub stars" src="https://img.shields.io/github/stars/vite-pwa/workbox-window-es?style=social">
 </a>
 </p>
 
@@ -43,7 +43,7 @@ ESM build of [workbox-window](https://www.npmjs.com/package/workbox-window).
 
 ## Original works
 
-ESM build of [workbox-window](https://www.npmjs.com/package/workbox-window).
+ESM-first build of [workbox-window](https://www.npmjs.com/package/workbox-window).
 
 This module's documentation can be found at https://developers.google.com/web/tools/workbox/modules/workbox-window.
 
