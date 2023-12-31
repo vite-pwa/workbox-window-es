@@ -38,13 +38,13 @@ export function useRegisterSW(options: RegisterSWOptions = {}) {
       onRegistered,
       onRegisteredSW,
       onRegisterError,
-      onInstalling(sw) {
-        installing.value = !!sw
-        onInstalling?.(sw)
+      onInstalling(state, sw) {
+        installing.value = state
+        onInstalling?.(state, sw)
       },
-      onUpdateFound(sw) {
-        updateFound.value = true
-        onUpdateFound?.(sw)
+      onUpdateFound(state, sw) {
+        updateFound.value = state
+        onUpdateFound?.(state, sw)
       },
     })
 

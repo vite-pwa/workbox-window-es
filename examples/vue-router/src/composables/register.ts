@@ -18,15 +18,23 @@ export interface RegisterSWOptions {
   onRegisteredSW?: (swScriptUrl: string, registration: ServiceWorkerRegistration | undefined) => void
   onRegisterError?: (error: any) => void
   /**
-   * Called when the service worker is installing for first time.
+   * Called when the service worker is installing for the first time.
    *
-   * This callback will also be called when the service worker is activated (no service worker param provided).
+   * This callback will also be called when the service worker is installed (no service worker param provided).
    *
+   * @param state true when the service worker is installing for first time and false when installed.
    * @param sw The service worker instance.
    */
-  onInstalling?: (sw?: ServiceWorker) => void
-  // TODO: change also this like onInstalling
-  onUpdateFound?: (sw: ServiceWorker) => void
+  onInstalling?: (state: boolean, sw?: ServiceWorker) => void
+  /**
+   * Called when a new service worker version is found and it is installing.
+   *
+   * This callback will also be called when the service worker is installed (no service worker param provided).
+   *
+   * @param state true when the service worker is installing and false when installed.
+   * @param sw The service worker instance.
+   */
+  onUpdateFound?: (state: boolean, sw?: ServiceWorker) => void
 }
 
 export function registerSW(options: RegisterSWOptions) {
@@ -41,7 +49,7 @@ export function registerSW(options: RegisterSWOptions) {
     onUpdateFound,
   } = options
 
-  let wb: import('workbox-window-es').Workbox | undefined
+  let wb: import('@vite-pwa/workbox-window').Workbox | undefined
   let registerPromise: Promise<void>
   let sendSkipWaitingMessage: () => Promise<void> | undefined
 
@@ -53,14 +61,8 @@ export function registerSW(options: RegisterSWOptions) {
 
   async function register() {
     if ('serviceWorker' in navigator) {
-      const { Workbox } = await import('workbox-window-es')
+      const { Workbox } = await import('@vite-pwa/workbox-window')
       wb = new Workbox(__SW__, { scope: __SW_SCOPE__, type: __SW_TYPE__ })
-      wb.addEventListener('installing', (event) => {
-        onInstalling?.(event.sw!)
-      })
-      wb.addEventListener('updatefound', (event) => {
-        onUpdateFound?.(event.sw!)
-      })
       sendSkipWaitingMessage = async () => {
         // Send a message to the waiting service worker,
         // instructing it to activate.
@@ -70,20 +72,40 @@ export function registerSW(options: RegisterSWOptions) {
       }
       if (!AUTO_DESTROY_SW) {
         if (AUTO_SW) {
+          wb.addEventListener('installing', (event) => {
+            console.log('installing:auto-update', { isUpdate: event.isUpdate, isExternal: event.isExternal })
+            event.isUpdate === true || event.isExternal === true
+              ? onUpdateFound?.(true, event.sw!)
+              : onInstalling?.(true, event.sw!)
+          })
           wb.addEventListener('activated', (event) => {
+            console.log('activated:auto-update', { isUpdate: event.isUpdate, isExternal: event.isExternal })
             if (event.isUpdate || event.isExternal)
               window.location.reload()
           })
           wb.addEventListener('installed', (event) => {
-            if (!event.isUpdate) {
-              onInstalling?.()
+            console.log('installed:auto-update', { isUpdate: event.isUpdate, isExternal: event.isExternal })
+            event.isUpdate || event.isExternal
+              ? onUpdateFound?.(false, event.sw!)
+              : onInstalling?.(false, event.sw!)
+            if (event.isUpdate === false)
               onOfflineReady?.()
-            }
           })
         }
         else {
           let onNeedRefreshCalled = false
-          const showSkipWaitingPrompt = () => {
+          const showSkipWaitingPrompt = (event?: import('@vite-pwa/workbox-window').WorkboxLifecycleWaitingEvent) => {
+            /*
+             FIX:
+             - open page in a new tab and navigate to home page
+             - add a new sw version
+             - open a new second tab and navigate to home page
+             - click reload on the first tab
+             - second tab refreshed, but the first tab doesn't (still with prompt)
+             */
+            if (event && onNeedRefreshCalled && event.isExternal === true)
+              window.location.reload()
+
             onNeedRefreshCalled = true
             // \`event.wasWaitingBeforeRegister\` will be false if this is
             // the first time the updated service worker is waiting.
@@ -97,35 +119,39 @@ export function registerSW(options: RegisterSWOptions) {
             // that will reload the page as soon as the previously waiting
             // service worker has taken control.
             wb?.addEventListener('controlling', (event) => {
-              if (event.isUpdate)
+              console.log('controlling::prompt', { isUpdate: event.isUpdate, isExternal: event.isExternal })
+              if (event.isUpdate === true || event.isExternal === true)
                 window.location.reload()
             })
 
             onNeedRefresh?.()
           }
+          wb.addEventListener('installing', (event) => {
+            console.log('installing::prompt', { isUpdate: event.isUpdate, isExternal: event.isExternal })
+            event.isUpdate === true || event.isExternal === true
+              ? onUpdateFound?.(true, event.sw!)
+              : onInstalling?.(true, event.sw!)
+          })
           wb.addEventListener('installed', (event) => {
+            console.log('installed::prompt', { isUpdate: event.isUpdate, isExternal: event.isExternal })
+            event.isUpdate === true || event.isExternal === true
+              ? onUpdateFound?.(false, event.sw!)
+              : onInstalling?.(false, event.sw!)
             if (typeof event.isUpdate === 'undefined') {
               if (typeof event.isExternal !== 'undefined') {
-                if (event.isExternal) {
+                if (event.isExternal)
                   showSkipWaitingPrompt()
-                }
-                else if (!onNeedRefreshCalled) {
-                  onInstalling?.()
+                else if (!onNeedRefreshCalled)
                   onOfflineReady?.()
-                }
               }
               else {
-                if (event.isExternal) {
+                if (event.isExternal)
                   window.location.reload()
-                }
-                else if (!onNeedRefreshCalled) {
-                  onInstalling?.()
+                else if (!onNeedRefreshCalled)
                   onOfflineReady?.()
-                }
               }
             }
             else if (!event.isUpdate) {
-              onInstalling?.()
               onOfflineReady?.()
             }
           })

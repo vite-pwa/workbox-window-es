@@ -1,8 +1,8 @@
 {
-  "name": "workbox-window-es",
+  "name": "@vite-pwa/workbox-window",
   "type": "module",
   "version": "0.0.0",
-  "packageManager": "pnpm@8.12.1",
+  "packageManager": "pnpm@8.13.1",
   "description": "Simplifies communications with Workbox packages running in the service worker",
   "author": "userquin <userquin@gmail.com>",
   "license": "MIT",
@@ -52,7 +52,6 @@
     "bumpp": "^9.2.0",
     "eslint": "^8.55.0",
     "tsup": "^8.0.1",
-    "typescript": "^5.3.3",
-    "workbox-core": "7.0.0"
+    "typescript": "^5.3.3"
   }
 }

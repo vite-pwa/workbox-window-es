@@ -9,8 +9,6 @@
 import { messageSW } from './messageSW'
 import { Workbox } from './Workbox'
 
-import './version'
-
 export { messageSW, Workbox }
 
 // See https://github.com/GoogleChrome/workbox/issues/2770

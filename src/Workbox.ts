@@ -6,18 +6,15 @@
   https://opensource.org/licenses/MIT.
 */
 
-import { Deferred } from 'workbox-core/_private/Deferred.js'
-import { dontWaitFor } from 'workbox-core/_private/dontWaitFor.js'
-import { logger } from 'workbox-core/_private/logger.js'
 import type { TrustedScriptURL } from 'trusted-types/lib'
-
+import { dontWaitFor } from './utils/dontWaitFor'
+import { logger } from './utils/logger'
+import { Deferred } from './utils/Deferred'
 import { messageSW } from './messageSW'
 import { WorkboxEventTarget } from './utils/WorkboxEventTarget'
 import { urlsMatch } from './utils/urlsMatch'
 import type { WorkboxLifecycleEventMap } from './utils/WorkboxEvent'
 import { WorkboxEvent } from './utils/WorkboxEvent'
-
-import './version'
 
 // The time a SW must be in the waiting phase before we can conclude
 // `skipWaiting()` wasn't called. This 200 amount wasn't scientifically

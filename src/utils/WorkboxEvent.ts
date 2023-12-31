@@ -7,7 +7,6 @@
 */
 
 import type { WorkboxEventTarget } from './WorkboxEventTarget'
-import '../version'
 
 /**
  * A minimal `Event` subclass shim.

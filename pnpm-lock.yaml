@@ -35,9 +35,6 @@ importers:
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
-      workbox-core:
-        specifier: 7.0.0
-        version: 7.0.0
 
   examples/vue-router:
     dependencies:
@@ -48,6 +45,9 @@ importers:
         specifier: ^4.2.5
         version: 4.2.5(vue@3.3.12)
     devDependencies:
+      '@vite-pwa/workbox-window':
+        specifier: workspace:*
+        version: link:../..
       '@vitejs/plugin-vue':
         specifier: ^4.5.2
         version: 4.5.2(vite@5.0.10)(vue@3.3.12)
@@ -66,9 +66,6 @@ importers:
       workbox-cli:
         specifier: ^7.0.0
         version: 7.0.0
-      workbox-window-es:
-        specifier: workspace:*
-        version: link:../..
 
 packages:
 
