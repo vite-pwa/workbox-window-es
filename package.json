@@ -40,7 +40,7 @@
     "lint": "eslint .",
     "lint-fix": "nr lint --fix",
     "prepublishOnly": "npm run build",
-    "release": "bumpp && npm publish"
+    "release": "bumpp && npm publish --access=public"
   },
   "dependencies": {
   },
