@@ -75,8 +75,8 @@ export function registerSW(options: RegisterSWOptions) {
           wb.addEventListener('installing', (event) => {
             console.log('installing:auto-update', { isUpdate: event.isUpdate, isExternal: event.isExternal })
             event.isUpdate === true || event.isExternal === true
-              ? onUpdateFound?.(true, event.sw!)
-              : onInstalling?.(true, event.sw!)
+              ? onUpdateFound?.(true, event.sw)
+              : onInstalling?.(true, event.sw)
           })
           wb.addEventListener('activated', (event) => {
             console.log('activated:auto-update', { isUpdate: event.isUpdate, isExternal: event.isExternal })
@@ -86,8 +86,8 @@ export function registerSW(options: RegisterSWOptions) {
           wb.addEventListener('installed', (event) => {
             console.log('installed:auto-update', { isUpdate: event.isUpdate, isExternal: event.isExternal })
             event.isUpdate || event.isExternal
-              ? onUpdateFound?.(false, event.sw!)
-              : onInstalling?.(false, event.sw!)
+              ? onUpdateFound?.(false, event.sw)
+              : onInstalling?.(false, event.sw)
             if (event.isUpdate === false)
               onOfflineReady?.()
           })
@@ -129,14 +129,14 @@ export function registerSW(options: RegisterSWOptions) {
           wb.addEventListener('installing', (event) => {
             console.log('installing::prompt', { isUpdate: event.isUpdate, isExternal: event.isExternal })
             event.isUpdate === true || event.isExternal === true
-              ? onUpdateFound?.(true, event.sw!)
-              : onInstalling?.(true, event.sw!)
+              ? onUpdateFound?.(true, event.sw)
+              : onInstalling?.(true, event.sw)
           })
           wb.addEventListener('installed', (event) => {
             console.log('installed::prompt', { isUpdate: event.isUpdate, isExternal: event.isExternal })
             event.isUpdate === true || event.isExternal === true
-              ? onUpdateFound?.(false, event.sw!)
-              : onInstalling?.(false, event.sw!)
+              ? onUpdateFound?.(false, event.sw)
+              : onInstalling?.(false, event.sw)
             if (typeof event.isUpdate === 'undefined') {
               if (typeof event.isExternal !== 'undefined') {
                 if (event.isExternal)
